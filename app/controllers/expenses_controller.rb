@@ -1,9 +1,8 @@
-class ExpensesController < ApplicationController
+class ExpensesController < ApplicationController  
   before_action :set_expense, only: [:show, :update, :destroy]
 
   def index
     @expenses = Transaction::Expense.all
-
     render json: @expenses
   end
 
