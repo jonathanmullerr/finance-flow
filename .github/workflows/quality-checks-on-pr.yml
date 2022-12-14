@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Install bundler
         run: |
-          sudo gem install bundler
+          docker-compose run app bundle install
 
       - name: Bundler install
         run: |
@@ -22,7 +22,7 @@ jobs:
 
       - name: Run Rubocop
         run: |
-          rubocop
+          docker-compose run app rubocop -Pc .rubocop.yml
 
       - name: Run Rspec
         run: |
