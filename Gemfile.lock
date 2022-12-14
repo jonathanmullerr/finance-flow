@@ -219,6 +219,7 @@ DEPENDENCIES
   byebug
   factory_bot_rails
   listen (~> 3.3)
+  mail
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 6.1.7)
