@@ -10,9 +10,25 @@ jobs:
     name: Rubocop & RSpec
     runs-on: ubuntu-latest
     steps:
+      - name: ls
+        run: |
+          ls
+
+      - name: ls
+        run: |
+          pwd
+
       - name: Install bundler
         run: |
           sudo gem install bundler
+
+      - name: ls
+        run: |
+          ls
+
+      - name: ls
+        run: |
+          pwd
 
       - name: Bundler install
         run: |
