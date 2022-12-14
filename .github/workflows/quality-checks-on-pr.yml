@@ -14,13 +14,9 @@ jobs:
         run: |
           sudo gem install bundler
 
-      - name: Informations
-        run: |
-          cd /home/runner/work/finance-flow/finance-flow
-
       - name: Bundler install
         run: |
-          bundle
+          bundle install
 
       - name: Run Rubocop
         run: |
