@@ -1,7 +1,5 @@
 name: Quality checks on PR 🧐
 
-name: CI
-
 on: [push]
 
 jobs:
