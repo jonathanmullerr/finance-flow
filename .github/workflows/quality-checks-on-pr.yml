@@ -26,9 +26,9 @@ jobs:
         run: |
           ls
 
-      - name: pwd_two
+      - name: cd
         run: |
-          pwd
+          cd ../
 
       - name: Bundler install
         run: |
