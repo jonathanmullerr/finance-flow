@@ -2,6 +2,10 @@ name: Quality checks on PR 🧐
 
 on:
   pull_request:
+    paths:
+      - "Gemfile"
+      - "**/*.rb"
+
     paths-ignore:
       - "**.md"
 
@@ -10,33 +14,9 @@ jobs:
     name: Rubocop & RSpec
     runs-on: ubuntu-latest
     steps:
-      - name: ls
-        run: |
-          ls
-
-      - name: pwd
-        run: |
-          pwd
-
       - name: Install bundler
         run: |
           sudo gem install bundler
-
-      - name: ls_two
-        run: |
-          ls
-
-      - name: cd
-        run: |
-          cd ../
-
-      - name: ls_three
-        run: |
-          ls
-
-      - name: pwd_three
-        run: |
-          pwd
 
       - name: Bundler install
         run: |
