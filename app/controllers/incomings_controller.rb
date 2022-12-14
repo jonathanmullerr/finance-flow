@@ -34,11 +34,12 @@ class IncomingsController < ApplicationController
   end
 
   private
-    def set_incoming
-      @incoming = Transaction::Incoming.find(params[:id])
-    end
 
-    def incoming_params
-      params.fetch(:incoming, {})
-    end
+  def set_incoming
+    @incoming = Transaction::Incoming.find(params[:id])
+  end
+
+  def incoming_params
+    params.fetch(:incoming, {})
+  end
 end

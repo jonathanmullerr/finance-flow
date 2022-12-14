@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ExpensesController, type: :controller do
-  before(:each) do 
+  before(:each) do
     @expense1 = create(:expense_one)
     @expense2 = create(:expense_two)
   end
@@ -19,7 +19,7 @@ RSpec.describe ExpensesController, type: :controller do
       expect(parsed_body.length).to eq 2
       expect(parsed_body.first["id"]).to eq @expense1.id
       expect(parsed_body.second["id"]).to eq @expense2.id
-    end 
+    end
   end
 
   describe "GET #show" do
@@ -40,21 +40,22 @@ RSpec.describe ExpensesController, type: :controller do
     describe 'POST #create' do
       context 'with valid params' do
         it 'creates a new expense' do
-          expect { post :create, params: { expense: {amount: 10.00} } 
-          }.to change(Expense, :count).by(1)
+          expect do
+            post :create, params: { expense: { amount: 10.00 } }
+          end.to change(Expense, :count).by(1)
         end
-  
+
         it 'renders the created expense as JSON' do
-          post :create, params: { expense: { amount: 10.00} }
-          expect(response.body).to eq( ExpenseSerializer.new(Expense.last).to_json)
+          post :create, params: { expense: { amount: 10.00 } }
+          expect(response.body).to eq(ExpenseSerializer.new(Expense.last).to_json)
         end
-  
+
         it 'returns a 201 (Created) status code' do
-          post :create, params: { expense: {amount: 200} }
+          post :create, params: { expense: { amount: 200 } }
           expect(response).to have_http_status(:created)
         end
       end
-  
+
       context 'with invalid params' do
         it 'returns a 422 (Unprocessable Entity) status code' do
           post :create, params: { expense: { amount: nil } }
@@ -63,23 +64,22 @@ RSpec.describe ExpensesController, type: :controller do
       end
     end
   end
-  
 
   describe "PUT #update" do
     context "when the expense is updated successfully" do
       it "renders the updated expense as json" do
         new_attributes = { date: Date.new(2022, 10, 10), amount: 100.0, description: "Trip to Hawaii" }
-        put :update, params: { id: @expense1.id, expense: new_attributes } 
-        
+        put :update, params: { id: @expense1.id, expense: new_attributes }
+
         expect(response).to have_http_status(:ok)
-        expect(response.body).to eq( ExpenseSerializer.new(@expense1.reload).to_json )
+        expect(response.body).to eq(ExpenseSerializer.new(@expense1.reload).to_json)
       end
     end
 
     context "when the expense fails to update" do
       it "renders the errors as json" do
         new_attributes_to_update = { date: '', type: '', amount: '', description: '' }
-        put :update, params: {id: @expense1.id, expense: new_attributes_to_update }
+        put :update, params: { id: @expense1.id, expense: new_attributes_to_update }
 
         expect(response).to have_http_status(:unprocessable_entity)
       end
@@ -98,8 +98,6 @@ RSpec.describe ExpensesController, type: :controller do
     end
   end
 
-
-  
   after(:each) do
     Expense.destroy_all
   end
