@@ -1,9 +1,8 @@
-class ExpensesController < ApplicationController
+class ExpensesController < ApplicationController  
   before_action :set_expense, only: [:show, :update, :destroy]
 
   def index
-    @expenses = Transaction::Expense.all
-
+    @expenses = Expense.all
     render json: @expenses
   end
 
@@ -12,7 +11,7 @@ class ExpensesController < ApplicationController
   end
 
   def create
-    @expense = Transaction::Expense.new(expense_params)
+    @expense = Expense.new(expense_params)
 
     if @expense.save
       render json: @expense, status: :created, location: @expense
@@ -35,10 +34,11 @@ class ExpensesController < ApplicationController
 
   private
     def set_expense
-      @expense = Transaction::Expense.find(params[:id])
+      @expense = Expense.find(params[:id])
     end
 
     def expense_params
-      params.fetch(:expense, {})
+      params.require(:expense).permit(:date, :type, :amount, :description)
     end
 end
+

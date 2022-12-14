@@ -1,2 +1,3 @@
-class Transaction::Expense < Transaction
+class Expense < Transaction
+    validates :amount, presence: true
 end
