@@ -1,2 +1,2 @@
-class Transaction::Incoming < Transaction
+class Incoming < Transaction
 end
