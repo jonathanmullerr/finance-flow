@@ -1,3 +1,3 @@
 class Expense < Transaction
-    validates :amount, presence: true
+  validates :amount, presence: true
 end

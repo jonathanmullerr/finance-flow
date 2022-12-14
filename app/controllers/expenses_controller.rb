@@ -1,4 +1,4 @@
-class ExpensesController < ApplicationController  
+class ExpensesController < ApplicationController
   before_action :set_expense, only: [:show, :update, :destroy]
 
   def index
@@ -33,12 +33,12 @@ class ExpensesController < ApplicationController
   end
 
   private
-    def set_expense
-      @expense = Expense.find(params[:id])
-    end
 
-    def expense_params
-      params.require(:expense).permit(:date, :type, :amount, :description)
-    end
+  def set_expense
+    @expense = Expense.find(params[:id])
+  end
+
+  def expense_params
+    params.require(:expense).permit(:date, :type, :amount, :description)
+  end
 end
-
