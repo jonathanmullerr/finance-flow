@@ -1,29 +1,22 @@
 name: Quality checks on PR 🧐
 
-on:
-  pull_request:
-    paths:
-      - "Gemfile"
-      - "**/*.rb"
-      - "**/*.yml"
+name: CI
+
+on: [push]
 
 jobs:
-  rspec:
-    name: Rubocop & RSpec
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Install bundler
+      - uses: actions/checkout@v2
+      - name: Install dependencies
         run: |
-          docker-compose run app bundle install
-
-      - name: Bundler install
-        run: |
+          gem install bundler
           bundle install
-
+      - name: Run tests
+        run: |
+          bundle exec rspec
       - name: Run Rubocop
         run: |
-          docker-compose run app rubocop -Pc .rubocop.yml
-
-      - name: Run Rspec
-        run: |
-          rspec
+          bundle exec rubocop
