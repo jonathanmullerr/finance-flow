@@ -5,9 +5,7 @@ on:
     paths:
       - "Gemfile"
       - "**/*.rb"
-
-    paths-ignore:
-      - "**.md"
+      - "**/*.yml"
 
 jobs:
   rspec:
