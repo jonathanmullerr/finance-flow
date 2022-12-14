@@ -16,7 +16,7 @@ jobs:
 
       - name: Informations
         run: |
-          ls
+          cd /home/runner/work/finance-flow/finance-flow
 
       - name: Bundler install
         run: |
