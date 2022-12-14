@@ -30,6 +30,14 @@ jobs:
         run: |
           cd ../
 
+      - name: ls_three
+        run: |
+          ls
+
+      - name: pwd_three
+        run: |
+          pwd
+
       - name: Bundler install
         run: |
           bundle install
