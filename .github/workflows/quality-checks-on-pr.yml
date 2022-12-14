@@ -1,0 +1,23 @@
+name: Quality checks on PR 🧐
+
+on:
+  pull_request:
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  rspec:
+    name: Rubocop & RSpec
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bundler install
+        run: |
+          bundle
+
+      - name: Run Rubocop
+        run: |
+          rubocop
+
+      - name: Run Rspec
+        run: |
+          rspec
