@@ -174,7 +174,7 @@ Style/ClassAndModuleChildren:
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
-    - "app/models/application_record.rb"
+    - "app/models/*"
     - "app/controllers/*"
     - "config/application.rb"
     - "db/migrate/*"
