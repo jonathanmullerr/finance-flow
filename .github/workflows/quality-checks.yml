@@ -18,6 +18,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup database
+        env:
+          RAILS_ENV: "test"
+          DATABASE_URL: "postgres://postgres@localhost:5432/finance_flow_test"
+        run: |
+          rails db:create
+          rails db:migrate
+          rails db:test:prepare
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -31,15 +40,6 @@ jobs:
       - name: Run Rubocop
         run: |
           bundle exec rubocop
-
-      - name: Setup database
-        env:
-          RAILS_ENV: "test"
-          DATABASE_URL: "postgres://postgres@localhost:5432/finance_flow_test"
-        run: |
-          rails db:create
-          rails db:migrate
-          rails db:test:prepare
 
       - name: Run RSpec tests
         run: |
