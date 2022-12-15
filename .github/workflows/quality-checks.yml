@@ -8,6 +8,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12.1-alpine
+        ports:
+          - 5432:5432
+
     steps:
       - uses: actions/checkout@v2
 
@@ -25,10 +32,11 @@ jobs:
         run: |
           bundle exec rubocop
 
-      - name: Set up database for test
+      - name: Setup database
+        env:
+          RAILS_ENV: "test"
+          DATABASE_URL: "postgres://postgres@localhost:5432/finance_flow_test"
         run: |
-          export PATH=$PATH:/usr/lib/postgresql/12/bin
-          /usr/lib/postgresql/12/bin/pg_ctl -D /usr/local/var/postgres start
           rails db:create
           rails db:migrate
           rails db:test:prepare
