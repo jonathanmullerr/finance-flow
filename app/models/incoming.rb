@@ -1,2 +1,0 @@
-class Incoming < Transaction
-end
