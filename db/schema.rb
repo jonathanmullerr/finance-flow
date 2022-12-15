@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_13_124255) do
+ActiveRecord::Schema.define(version: 2022_12_15_212200) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,15 +18,30 @@ ActiveRecord::Schema.define(version: 2022_12_13_124255) do
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+    t.text "description"
+    t.string "image"
   end
 
-  create_table "transactions", force: :cascade do |t|
+  create_table "entries", force: :cascade do |t|
     t.date "date"
-    t.string "type"
+    t.string "transaction_type"
     t.decimal "amount"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "type"
   end
 
+  create_table "entry_categories", force: :cascade do |t|
+    t.bigint "entry_id", null: false
+    t.bigint "category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_entry_categories_on_category_id"
+    t.index ["entry_id"], name: "index_entry_categories_on_entry_id"
+  end
+
+  add_foreign_key "entry_categories", "categories"
+  add_foreign_key "entry_categories", "entries"
 end

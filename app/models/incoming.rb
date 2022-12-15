@@ -1,2 +1,2 @@
-class Incoming < Transaction
+class Incoming < Entry
 end
