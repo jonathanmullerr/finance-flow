@@ -9,6 +9,4 @@ class IncomingsController < ApplicationController
 
     render json: @incoming
   end
-
-  
 end
