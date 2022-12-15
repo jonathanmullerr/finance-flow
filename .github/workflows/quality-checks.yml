@@ -15,6 +15,7 @@ jobs:
         image: postgres:12.1-alpine
         ports:
           - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - uses: actions/checkout@v2
@@ -29,18 +30,11 @@ jobs:
           sudo gem install bundler
           bundle install
 
-      - name: Setup database
+      - name: Test with RSpec
         env:
           RAILS_ENV: "test"
           DATABASE_URL: "postgres://postgres@localhost:5432/finance_flow_test"
-
-      - name: See conection
-        run: |
-          rails c
-          a = Entry.new({amount: 1})
-          a.save!
-          puts a
-          
+          RUBYOPT: "-W:no-deprecated -W:no-experimental" # Suppress Rails 6 deprecation warnings for ruby 2.7
         run: |
           bundle exec rails db:setup
           bundle exec rspec
