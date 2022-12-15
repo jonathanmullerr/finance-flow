@@ -1,3 +1,3 @@
-class Transaction < ApplicationRecord
+class Entry < ApplicationRecord
   validates :amount, presence: true
 end

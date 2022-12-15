@@ -1,19 +1,19 @@
 FactoryBot.define do
-  factory :transaction_one, class: Transaction do
+  factory :entry_one, class: Entry do
     date { Date.today }
     transaction_type { "Expense" }
     amount { 150.50 }
     description { "Test One" }
   end
 
-  factory :transaction_two, class: Transaction do
+  factory :entry_two, class: Entry do
     date { Date.today }
     transaction_type { "Expense" }
     amount { 100.00 }
     description { "Test Two" }
   end
 
-  factory :transaction_three, class: Transaction do
+  factory :entry_three, class: Entry do
     date { Date.today }
     transaction_type { "Incoming" }
     amount { 200.0 }
