@@ -28,7 +28,7 @@ jobs:
       - name: Set up database for test
         run: |
           export PATH=$PATH:/usr/lib/postgresql/12/bin
-          pg_ctl -D /usr/local/var/postgres start
+          /usr/lib/postgresql/12/bin/pg_ctl -D /usr/local/var/postgres start
           rails db:create
           rails db:migrate
           rails db:test:prepare
