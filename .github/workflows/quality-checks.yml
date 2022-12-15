@@ -33,14 +33,9 @@ jobs:
           RAILS_ENV: "test"
           DATABASE_URL: "postgres://postgres@localhost:5432/finance_flow_test"
         run: |
-          rails db:create
-          rails db:migrate
-          rails db:test:prepare
+          bundle exec rails db:setup
+          bundle exec rspec
 
       - name: Run Rubocop
         run: |
           bundle exec rubocop
-
-      - name: Run RSpec tests
-        run: |
-          bundle exec rspec
