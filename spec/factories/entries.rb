@@ -2,8 +2,8 @@ FactoryBot.define do
   factory :entry_one, class: Entry do
     date { Date.today }
     transaction_type { "Expense" }
-    amount { 150.50 }
-    description { "Test One" }
+    amount { 100.00 }
+    description { Faker::Lorem.sentence }
   end
 
   factory :entry_two, class: Entry do
