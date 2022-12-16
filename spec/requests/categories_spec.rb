@@ -1,12 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe CategoriesController, type: :controller do
+  before { allow(controller).to receive(:authorize_request).and_return(true) }
+
   before(:each) do
-    @category1 = create(:category)
-    @category2 = create(:category)
+    @user = create(:user)
+    
+    @category1 = create(:category, user: @user)
+    @category2 = create(:category, user: @user)
   end
 
   describe "GET #index" do
+
     it "returns a success response" do
       get :index
       expect(response).to be_successful
@@ -40,17 +45,17 @@ RSpec.describe CategoriesController, type: :controller do
     context 'with valid params' do
       it 'creates a new category' do
         expect do
-          post :create, params: { categories: { name: "Test" } }
+          post :create, params: { categories: { name: "Test", user_id: @user.id } }
         end.to change(Category, :count).by(1)
       end
 
       it 'renders the created category as JSON' do
-        post :create, params: { categories: { name: "Test" } }
+        post :create, params: { categories: { name: "Test", user_id: @user.id} }
         expect(response.body).to eq(CategorySerializer.new(Category.last).to_json)
       end
 
       it 'returns a 201 (Created) status code' do
-        post :create, params: { categories: { name: "Test" } }
+        post :create, params: { categories: { name: "Test", user_id: @user.id} }
         expect(response).to have_http_status(:created)
       end
     end

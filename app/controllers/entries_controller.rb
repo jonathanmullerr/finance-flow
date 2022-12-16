@@ -40,6 +40,6 @@ class EntriesController < ApplicationController
   end
 
   def entry_params
-    params.require(:entries).permit(:date, :transaction_type, :amount, :description)
+    params.require(:entries).permit(:date, :transaction_type, :amount, :description, :user_id)
   end
 end

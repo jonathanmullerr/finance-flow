@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe EntriesController, type: :controller do
+  before { allow(controller).to receive(:authorize_request).and_return(true) }
+
   before(:each) do
-    @incoming1 = create(:incoming)
-    @incoming2 = create(:incoming)
+    user = create(:user)
+    @incoming1 = create(:incoming, user: user)
+    @incoming2 = create(:incoming, user: user)
   end
 
   describe "GET #index" do

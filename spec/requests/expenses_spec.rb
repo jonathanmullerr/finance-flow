@@ -1,9 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ExpensesController, type: :controller do
+  before { allow(controller).to receive(:authorize_request).and_return(true) }
+
   before(:each) do
-    @expense1 = create(:expense)
-    @expense2 = create(:expense)
+    user = create(:user)
+    @expense1 = create(:expense, user: user)
+    @expense2 = create(:expense, user: user)
   end
 
   describe "GET #index" do
