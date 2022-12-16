@@ -176,6 +176,7 @@ Style/Documentation:
   Exclude:
     - "app/models/*"
     - "app/controllers/*"
+    - "app/lib/*"
     - "config/application.rb"
     - "db/migrate/*"
 
