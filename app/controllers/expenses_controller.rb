@@ -1,4 +1,6 @@
 class ExpensesController < ApplicationController
+  before_action :authorize_request
+
   def index
     @expenses = Expense.all
     render json: @expenses
