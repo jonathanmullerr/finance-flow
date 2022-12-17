@@ -1,12 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe EntriesController, type: :controller do
-  before { allow(controller).to receive(:authorize_request).and_return(true) }
-
+  let(:user) { create(:user) }
+  let(:token) { JsonWebToken.encode(user_id: user.id) }
+ 
   before(:each) do
-    @user = create(:user)
-    @entry1 = create(:entry_one, user: @user)
-    @entry2 = create(:entry_two, user: @user)
+    request.headers['Authorization'] = "Bearer #{token}"
+    @entry1 = create(:entry_one, user: user)
+    @entry2 = create(:entry_two, user: user)
   end
 
   describe "GET #index" do
@@ -43,17 +44,17 @@ RSpec.describe EntriesController, type: :controller do
     context 'with valid params' do
       it 'creates a new entry' do
         expect do
-          post :create, params: { amount: 10.00, user_id: @user.id }
+          post :create, params: { amount: 10.00 }
         end.to change(Entry, :count).by(1)
       end
 
       it 'renders the created entry as JSON' do
-        post :create, params: {  amount: 10.00, user_id: @user.id }
+        post :create, params: {  amount: 10.00 }
         expect(response.body).to eq(EntrySerializer.new(Entry.last).to_json)
       end
 
       it 'returns a 201 (Created) status code' do
-        post :create, params: { amount: 200, user_id: @user.id }
+        post :create, params: { amount: 200 }
         expect(response).to have_http_status(:created)
       end
     end
@@ -69,7 +70,7 @@ RSpec.describe EntriesController, type: :controller do
   describe "PUT #update" do
     context "when the entry is updated successfully" do
       it "renders the updated entry as json" do
-        new_attributes = { date: Date.new(2022, 10, 10), amount: 100.0, description: "Trip to Hawaii", user_id: @user.id, id: @entry1.id }
+        new_attributes = { date: Date.new(2022, 10, 10), amount: 100.0, description: "Trip to Hawaii", id: @entry1.id }
         put :update, params: new_attributes
 
         expect(response).to have_http_status(:ok)

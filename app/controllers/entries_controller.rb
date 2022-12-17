@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
 
   # GET /entries
   def index
-    @entries = Entry.all
+    @entries = Entry.where(user_id: @current_user.id)
     render json: @entries
   end
 
@@ -36,15 +36,17 @@ class EntriesController < ApplicationController
   # DELETE /entries/1
   def destroy
     @entry.destroy
+
+    render json: { message: "Entry deleted successfully" }
   end
 
   private
 
   def set_entry
-    @entry = Entry.find(params[:id])
+    @entry = Entry.find_by(id: params[:id], user_id: @current_user.id)
   end
 
   def entry_params
-    params.permit(:date, :transaction_type, :amount, :description, :user_id)
+    params.permit(:date, :transaction_type, :amount, :description).merge(user_id: @current_user.id)
   end
 end

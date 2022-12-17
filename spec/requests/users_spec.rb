@@ -13,21 +13,18 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe UsersController, type: :controller do
-  before { allow(controller).to receive(:authorize_request).and_return(true) }
-
   let(:user) { create(:user) }
+  let(:token) { JsonWebToken.encode(user_id: user.id) }
+ 
+  before(:each) do
+    request.headers['Authorization'] = "Bearer #{token}"
+  end
+
 
   describe 'GET #index' do
     it 'returns a success response' do
       get :index
       expect(response).to be_successful
-    end
-
-    it 'returns all users' do
-      create_list(:user, 3)
-
-      get :index
-      expect(assigns(:users).count).to eq(3)
     end
   end
 

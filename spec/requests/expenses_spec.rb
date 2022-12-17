@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ExpensesController, type: :controller do
-  before { allow(controller).to receive(:authorize_request).and_return(true) }
-
+  let(:user) { create(:user) }
+  let(:token) { JsonWebToken.encode(user_id: user.id) }
+ 
   before(:each) do
-    user = create(:user)
+    request.headers['Authorization'] = "Bearer #{token}"
     @expense1 = create(:expense, user: user)
     @expense2 = create(:expense, user: user)
   end
