@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Incoming, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe Incoming do
+    it "inherits from the Entry class" do
+      expect(Incoming.superclass).to eq(Entry)
+    end
+  end
+  
 end
