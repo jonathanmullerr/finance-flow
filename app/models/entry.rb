@@ -6,7 +6,6 @@ class Entry < ApplicationRecord
 
   # Validations
   validates :amount, presence: true
-  
- 
+
   self.inheritance_column = :type
 end

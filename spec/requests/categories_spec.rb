@@ -5,13 +5,12 @@ RSpec.describe CategoriesController, type: :controller do
 
   before(:each) do
     @user = create(:user)
-    
+
     @category1 = create(:category, user: @user)
     @category2 = create(:category, user: @user)
   end
 
   describe "GET #index" do
-
     it "returns a success response" do
       get :index
       expect(response).to be_successful
@@ -50,12 +49,12 @@ RSpec.describe CategoriesController, type: :controller do
       end
 
       it 'renders the created category as JSON' do
-        post :create, params: { categories: { name: "Test", user_id: @user.id} }
+        post :create, params: { categories: { name: "Test", user_id: @user.id } }
         expect(response.body).to eq(CategorySerializer.new(Category.last).to_json)
       end
 
       it 'returns a 201 (Created) status code' do
-        post :create, params: { categories: { name: "Test", user_id: @user.id} }
+        post :create, params: { categories: { name: "Test", user_id: @user.id } }
         expect(response).to have_http_status(:created)
       end
     end

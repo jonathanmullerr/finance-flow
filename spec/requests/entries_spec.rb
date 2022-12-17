@@ -43,12 +43,12 @@ RSpec.describe EntriesController, type: :controller do
     context 'with valid params' do
       it 'creates a new entry' do
         expect do
-          post :create, params: { entries: { amount: 10.00 , user_id: @user.id} }
+          post :create, params: { entries: { amount: 10.00, user_id: @user.id } }
         end.to change(Entry, :count).by(1)
       end
 
       it 'renders the created entry as JSON' do
-        post :create, params: { entries: { amount: 10.00, user_id: @user.id} }
+        post :create, params: { entries: { amount: 10.00, user_id: @user.id } }
         expect(response.body).to eq(EntrySerializer.new(Entry.last).to_json)
       end
 
