@@ -43,24 +43,24 @@ RSpec.describe EntriesController, type: :controller do
     context 'with valid params' do
       it 'creates a new entry' do
         expect do
-          post :create, params: { entries: { amount: 10.00, user_id: @user.id } }
+          post :create, params: { amount: 10.00, user_id: @user.id }
         end.to change(Entry, :count).by(1)
       end
 
       it 'renders the created entry as JSON' do
-        post :create, params: { entries: { amount: 10.00, user_id: @user.id } }
+        post :create, params: {  amount: 10.00, user_id: @user.id }
         expect(response.body).to eq(EntrySerializer.new(Entry.last).to_json)
       end
 
       it 'returns a 201 (Created) status code' do
-        post :create, params: { entries: { amount: 200, user_id: @user.id } }
+        post :create, params: { amount: 200, user_id: @user.id }
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'with invalid params' do
       it 'returns a 422 (Unprocessable Entity) status code' do
-        post :create, params: { entries: { amount: nil } }
+        post :create, params: { amount: nil }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -69,8 +69,8 @@ RSpec.describe EntriesController, type: :controller do
   describe "PUT #update" do
     context "when the entry is updated successfully" do
       it "renders the updated entry as json" do
-        new_attributes = { date: Date.new(2022, 10, 10), amount: 100.0, description: "Trip to Hawaii", user_id: @user.id }
-        put :update, params: { id: @entry1.id, entries: new_attributes }
+        new_attributes = { date: Date.new(2022, 10, 10), amount: 100.0, description: "Trip to Hawaii", user_id: @user.id, id: @entry1.id }
+        put :update, params: new_attributes
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(EntrySerializer.new(@entry1.reload).to_json)
@@ -79,8 +79,8 @@ RSpec.describe EntriesController, type: :controller do
 
     context "when the entry fails to update" do
       it "renders the errors as json" do
-        new_attributes_to_update = { date: '', type: '', amount: '', description: '' }
-        put :update, params: { id: @entry1.id, entries: new_attributes_to_update }
+        new_attributes_to_update = { date: '', type: '', amount: '', description: '', id: @entry1.id }
+        put :update, params: new_attributes_to_update
 
         expect(response).to have_http_status(:unprocessable_entity)
       end

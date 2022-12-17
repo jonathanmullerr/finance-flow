@@ -44,24 +44,24 @@ RSpec.describe CategoriesController, type: :controller do
     context 'with valid params' do
       it 'creates a new category' do
         expect do
-          post :create, params: { categories: { name: "Test", user_id: @user.id } }
+          post :create, params: { name: "Test", user_id: @user.id }
         end.to change(Category, :count).by(1)
       end
 
       it 'renders the created category as JSON' do
-        post :create, params: { categories: { name: "Test", user_id: @user.id } }
+        post :create, params: { name: "Test", user_id: @user.id }
         expect(response.body).to eq(CategorySerializer.new(Category.last).to_json)
       end
 
       it 'returns a 201 (Created) status code' do
-        post :create, params: { categories: { name: "Test", user_id: @user.id } }
+        post :create, params: {  name: "Test", user_id: @user.id }
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'with invalid params' do
       it 'returns a 422 (Unprocessable Entity) status code' do
-        post :create, params: { categories: { name: nil } }
+        post :create, params: { name: nil }
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -70,8 +70,8 @@ RSpec.describe CategoriesController, type: :controller do
   describe "PUT #update" do
     context "when the entry is updated successfully" do
       it "renders the updated entry as json" do
-        new_attributes = { name: "Test", description: "", image: "" }
-        put :update, params: { id: @category1.id, categories: new_attributes }
+        new_attributes = { id: @category1.id, name: "Test", description: "", image: "" }
+        put :update, params: new_attributes
 
         expect(response).to have_http_status(:ok)
         expect(response.body).to eq(CategorySerializer.new(@category1.reload).to_json)
@@ -80,8 +80,8 @@ RSpec.describe CategoriesController, type: :controller do
 
     context "when the entry fails to update" do
       it "renders the errors as json" do
-        new_attributes_to_update = { name: "", description: "", image: "" }
-        put :update, params: { id: @category1.id, categories: new_attributes_to_update }
+        new_attributes_to_update = { id: @category1.id, name: "", description: "", image: "" }
+        put :update, params: new_attributes_to_update
 
         expect(response).to have_http_status(:unprocessable_entity)
       end

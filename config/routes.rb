@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :expenses
 
   resources :users
-  resources :users, param: :_username
+  resources :users, param: :id
   post '/auth/login', to: 'authentication#login'
   get '/not_found', to: 'application#not_found'
   get '/auth/verify', to: 'authentication#verify'

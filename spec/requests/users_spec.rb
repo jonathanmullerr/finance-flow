@@ -12,116 +12,100 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/users", type: :request do
-  # This should return the minimal set of attributes required to create a valid
-  # User. As you add validations to User, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) do
-    skip("Add a hash of attributes valid for your model")
-  end
+RSpec.describe UsersController, type: :controller do
+  before { allow(controller).to receive(:authorize_request).and_return(true) }
 
-  let(:invalid_attributes) do
-    skip("Add a hash of attributes invalid for your model")
-  end
+  let(:user) { create(:user) }
 
-  # This should return the minimal set of values that should be in the headers
-  # in order to pass any filters (e.g. authentication) defined in
-  # UsersController, or in your router and rack
-  # middleware. Be sure to keep this updated too.
-  let(:valid_headers) do
-    {}
-  end
-
-  describe "GET /index" do
-    it "renders a successful response" do
-      User.create! valid_attributes
-      get users_url, headers: valid_headers, as: :json
+  describe 'GET #index' do
+    it 'returns a success response' do
+      get :index
       expect(response).to be_successful
+    end
+
+    it 'returns all users' do
+      create_list(:user, 3)
+
+      get :index
+      expect(assigns(:users).count).to eq(3)
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      user = User.create! valid_attributes
-      get user_url(user), as: :json
+  describe 'GET #show' do
+    it 'returns a success response' do
+      get :show, params: { id: user.to_param }
       expect(response).to be_successful
+    end
+
+    it 'returns the requested user' do
+      get :show, params: { id: user.to_param }
+      expect(assigns(:user)).to eq(user)
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new User" do
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new user' do
         expect do
-          post users_url,
-               params: { user: valid_attributes }, headers: valid_headers, as: :json
+          post :create, params: attributes_for(:user)
         end.to change(User, :count).by(1)
       end
 
-      it "renders a JSON response with the new user" do
-        post users_url,
-             params: { user: valid_attributes }, headers: valid_headers, as: :json
+      it 'returns a created response' do
+        post :create, params: attributes_for(:user)
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new User" do
+    context 'with invalid params' do
+      it 'does not create a new user' do
         expect do
-          post users_url,
-               params: { user: invalid_attributes }, as: :json
+          post :create, params: { email: 'invalid_email' }
         end.to change(User, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new user" do
-        post users_url,
-             params: { user: invalid_attributes }, headers: valid_headers, as: :json
+      it 'returns an unprocessable_entity response' do
+        post :create, params: { email: 'invalid_email' }
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) do
-        skip("Add a hash of attributes valid for your model")
-      end
+  describe 'PUT #update' do
+    context 'with valid params' do
+      let(:new_attributes) { { name: 'New Name' } }
 
-      it "updates the requested user" do
-        user = User.create! valid_attributes
-        patch user_url(user),
-              params: { user: new_attributes }, headers: valid_headers, as: :json
+      it 'updates the requested user' do
+        put :update, params: new_attributes.merge({ id: user.to_param })
         user.reload
-        skip("Add assertions for updated state")
+        expect(user.name).to eq('New Name')
       end
 
-      it "renders a JSON response with the user" do
-        user = User.create! valid_attributes
-        patch user_url(user),
-              params: { user: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
+      it 'returns a success response' do
+        put :update, params: new_attributes.merge({ id: user.to_param })
+        expect(response).to be_successful
       end
     end
 
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the user" do
-        user = User.create! valid_attributes
-        patch user_url(user),
-              params: { user: invalid_attributes }, headers: valid_headers, as: :json
+    context 'with invalid params' do
+      it 'returns an unprocessable_entity response' do
+        put :update, params: { id: user.to_param, email: 'invalid_email' }
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to match(a_string_including("application/json"))
       end
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested user" do
-      user = User.create! valid_attributes
-      expect do
-        delete user_url(user), headers: valid_headers, as: :json
-      end.to change(User, :count).by(-1)
+  describe "DELETE #destroy" do
+    context "when the entry is destroyed successfully" do
+      it "destroys the entry" do
+        delete :destroy, params: { id: user.to_param }
+
+        expect { user.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
+  end
+
+  after(:each) do
+    User.destroy_all
   end
 end
