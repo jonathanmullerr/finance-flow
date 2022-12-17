@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     render json: @users, status: :ok
   end
 
-  # GET /users/{username}
+  # GET /users/{id}
   def show
     render json: @user, status: :ok
   end
@@ -24,14 +24,14 @@ class UsersController < ApplicationController
     end
   end
 
-  # PUT /users/{username}
+  # PUT /users/{id}
   def update
     @user.update!(user_params)
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.message }, status: :unprocessable_entity
   end
 
-  # DELETE /users/{username}
+  # DELETE /users/{id}
   def destroy
     @user.destroy
   end
