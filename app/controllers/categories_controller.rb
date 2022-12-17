@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories
   def index
-    @categories = Category.all
+    @categories = Category.where(user_id: @current_user.id)
 
     render json: @categories
   end
@@ -15,6 +15,8 @@ class CategoriesController < ApplicationController
   end
 
   # POST /categories
+  # Params: name, description, image, user_id
+  # Require: name
   def create
     @category = Category.new(category_params)
 
@@ -26,6 +28,8 @@ class CategoriesController < ApplicationController
   end
 
   # PATCH/PUT /categories/1
+  # Params: id, name, description, image
+  # Require: id
   def update
     if @category.update(category_params)
       render json: @category
@@ -37,15 +41,17 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   def destroy
     @category.destroy
+
+    render json: { message: "Category deleted successfully" }  
   end
 
   private
 
   def set_category
-    @category = Category.find(params[:id])
+    @category = Category.find_by(id: params[:id], user_id: @current_user.id)
   end
 
   def category_params
-    params.permit(:name, :description, :image, :user_id)
+    params.permit(:name, :description, :image).merge(user_id: @current_user.id)
   end
 end
