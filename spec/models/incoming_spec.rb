@@ -6,5 +6,4 @@ RSpec.describe Incoming, type: :model do
       expect(Incoming.superclass).to eq(Entry)
     end
   end
-  
 end

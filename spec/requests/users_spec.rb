@@ -15,11 +15,10 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
   let(:user) { create(:user) }
   let(:token) { JsonWebToken.encode(user_id: user.id) }
- 
+
   before(:each) do
     request.headers['Authorization'] = "Bearer #{token}"
   end
-
 
   describe 'GET #index' do
     it 'returns a success response' do

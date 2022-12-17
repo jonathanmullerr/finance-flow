@@ -42,7 +42,7 @@ class CategoriesController < ApplicationController
   def destroy
     @category.destroy
 
-    render json: { message: "Category deleted successfully" }  
+    render json: { message: "Category deleted successfully" }
   end
 
   private

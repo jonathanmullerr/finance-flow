@@ -6,5 +6,4 @@ RSpec.describe Expense, type: :model do
       expect(Expense.superclass).to eq(Entry)
     end
   end
-  
 end
