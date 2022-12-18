@@ -6,6 +6,7 @@ class Entry < ApplicationRecord
 
   # Validations
   validates :amount, presence: true
+  validates :type, presence: true, inclusion: { in: %w[Expense Incoming] }
 
   self.inheritance_column = :type
 
