@@ -1,4 +1,8 @@
 class ApplicationController < ActionController::API
+  def information
+    render json: { message: 'Welcome to the Finance-Flow API. Para acessar qualquer rota, é necessário fazer login em /auth/login para receber um token de autenticação' }
+  end
+
   def not_found
     render json: { error: 'not_found' }, status: :not_found
   end
