@@ -47,6 +47,6 @@ class EntriesController < ApplicationController
   end
 
   def entry_params
-    params.permit(:date, :transaction_type, :amount, :description).merge(user_id: @current_user.id)
+    params.permit(:date, :type, :amount, :description).merge(user_id: @current_user.id)
   end
 end

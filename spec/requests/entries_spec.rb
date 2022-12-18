@@ -44,17 +44,17 @@ RSpec.describe EntriesController, type: :controller do
     context 'with valid params' do
       it 'creates a new entry' do
         expect do
-          post :create, params: { amount: 10.00 }
+          post :create, params: { amount: 10.00, type: "Expense" }
         end.to change(Entry, :count).by(1)
       end
 
       it 'renders the created entry as JSON' do
-        post :create, params: {  amount: 10.00 }
+        post :create, params: {  amount: 10.00, type: "Expense" }
         expect(response.body).to eq(EntrySerializer.new(Entry.last).to_json)
       end
 
       it 'returns a 201 (Created) status code' do
-        post :create, params: { amount: 200 }
+        post :create, params: { amount: 200, type: "Expense" }
         expect(response).to have_http_status(:created)
       end
     end
@@ -70,7 +70,7 @@ RSpec.describe EntriesController, type: :controller do
   describe "PUT #update" do
     context "when the entry is updated successfully" do
       it "renders the updated entry as json" do
-        new_attributes = { date: Date.new(2022, 10, 10), amount: 100.0, description: "Trip to Hawaii", id: @entry1.id }
+        new_attributes = { date: Date.new(2022, 10, 10), type: "Expense", amount: 100.0, description: "Trip to Hawaii", id: @entry1.id }
         put :update, params: new_attributes
 
         expect(response).to have_http_status(:ok)
