@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_15_212200) do
+ActiveRecord::Schema.define(version: 2022_12_18_170102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,16 +21,17 @@ ActiveRecord::Schema.define(version: 2022_12_15_212200) do
     t.string "name"
     t.text "description"
     t.string "image"
+    t.integer "user_id"
   end
 
   create_table "entries", force: :cascade do |t|
     t.date "date"
-    t.string "transaction_type"
     t.decimal "amount"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "type"
+    t.integer "user_id"
   end
 
   create_table "entry_categories", force: :cascade do |t|
@@ -40,6 +41,15 @@ ActiveRecord::Schema.define(version: 2022_12_15_212200) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_entry_categories_on_category_id"
     t.index ["entry_id"], name: "index_entry_categories_on_entry_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "username"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "entry_categories", "categories"

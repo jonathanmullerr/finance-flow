@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe ExpensesController, type: :controller do
+  let(:user) { create(:user) }
+  let(:token) { JsonWebToken.encode(user_id: user.id) }
+
   before(:each) do
-    @expense1 = create(:expense)
-    @expense2 = create(:expense)
+    request.headers['Authorization'] = "Bearer #{token}"
+    @expense1 = create(:expense, user: user)
+    @expense2 = create(:expense, user: user)
   end
 
   describe "GET #index" do

@@ -38,10 +38,14 @@ jobs:
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
 
-      - name: Test with RSpec
+      - name: Test with RSpec 🕵
         env:
           RAILS_ENV: "test"
           DATABASE_URL: "postgres://postgres@localhost:5432/finance_flow_test"
         run: |
           bundle exec rails db:setup
           bundle exec rspec
+
+      - name: Rubocop 👮
+        run: |
+          bundle exec rubocop

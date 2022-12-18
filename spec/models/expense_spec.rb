@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Expense, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe Expense do
+    it "inherits from the Entry class" do
+      expect(Expense.superclass).to eq(Entry)
+    end
+  end
 end

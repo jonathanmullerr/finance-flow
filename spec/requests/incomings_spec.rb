@@ -1,9 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe EntriesController, type: :controller do
+  let(:user) { create(:user) }
+  let(:token) { JsonWebToken.encode(user_id: user.id) }
+
   before(:each) do
-    @incoming1 = create(:incoming)
-    @incoming2 = create(:incoming)
+    request.headers['Authorization'] = "Bearer #{token}"
+    @incoming1 = create(:incoming, user: user)
+    @incoming2 = create(:incoming, user: user)
   end
 
   describe "GET #index" do
