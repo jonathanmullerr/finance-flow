@@ -8,4 +8,7 @@ class Entry < ApplicationRecord
   validates :amount, presence: true
 
   self.inheritance_column = :type
+
+  # Scopes
+  scope :for_user, ->(user) { where(user: user) }
 end

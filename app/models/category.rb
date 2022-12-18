@@ -6,4 +6,7 @@ class Category < ApplicationRecord
 
   # Validations
   validates :name, presence: true
+
+  # Scopes
+  scope :for_user, ->(user) { where(user: user) }
 end

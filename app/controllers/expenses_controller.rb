@@ -4,13 +4,13 @@ class ExpensesController < EntriesController
 
   # GET /expenses
   def index
-    @expenses = Expense.all
+    @expenses = Expense.for_user(@current_user)
     render json: @expenses
   end
 
   # GET /expenses/1
   def show
-    @expense = Expense.find(params[:id])
+    @expense = Expense.for_user(@current_user).find(params[:id])
     render json: @expense
   end
 

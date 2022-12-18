@@ -4,8 +4,7 @@ class CategoriesController < ApplicationController
 
   # GET /categories
   def index
-    @categories = Category.where(user_id: @current_user.id)
-
+    @categories = Category.for_user(@current_user)
     render json: @categories
   end
 
@@ -41,14 +40,13 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1
   def destroy
     @category.destroy
-
     render json: { message: "Category deleted successfully" }
   end
 
   private
 
   def set_category
-    @category = Category.find_by(id: params[:id], user_id: @current_user.id)
+    @category = Category.for_user(@current_user).find(params[:id])
   end
 
   def category_params
