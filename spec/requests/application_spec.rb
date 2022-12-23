@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ApplicationController, type: :controller do
   # describe '#not_found' do
   #   it 'renders a not_found error in JSON format' do
-  #     get 
+  #     get
   #     expect(response.body).to eq({ error: 'not_found' }.to_json)
   #     expect(response).to have_http_status(:not_found)
   #   end
