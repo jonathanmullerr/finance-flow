@@ -4,7 +4,7 @@ class EntriesController < ApplicationController
 
   # GET /entries
   def index
-    @entries = Entry.for_user(@current_user)
+    @entries = Entry.all
     render json: @entries
   end
 
@@ -43,7 +43,7 @@ class EntriesController < ApplicationController
   private
 
   def set_entry
-    @entry = Entry.for_user(@current_user).find(params[:id])
+    @entry = Entry.find(params[:id])
   end
 
   def entry_params

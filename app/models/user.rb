@@ -12,4 +12,8 @@ class User < ApplicationRecord
   validates :password,
             length: { minimum: 6 },
             if: -> { new_record? || !password.nil? }
+
+  def self.current_id
+    Thread.current[:user_id]
+  end
 end

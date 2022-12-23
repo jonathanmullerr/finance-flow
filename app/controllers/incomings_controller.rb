@@ -4,13 +4,13 @@ class IncomingsController < EntriesController
 
   # GET /incomings
   def index
-    @incomings = Incoming.for_user(@current_user)
+    @incomings = Incoming.all
     render json: @incomings
   end
 
   # GET /incomings/1
   def show
-    @incoming = Incoming.for_user(@current_user).find(params[:id])
+    @incoming = Incoming.find(params[:id])
     render json: @incoming
   end
 

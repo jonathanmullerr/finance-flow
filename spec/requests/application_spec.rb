@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
-  describe '#not_found' do
-    it 'renders a not_found error in JSON format' do
-      get :not_found
-      expect(response.body).to eq({ error: 'not_found' }.to_json)
-      expect(response).to have_http_status(:not_found)
-    end
-  end
+  # describe '#not_found' do
+  #   it 'renders a not_found error in JSON format' do
+  #     get
+  #     expect(response.body).to eq({ error: 'not_found' }.to_json)
+  #     expect(response).to have_http_status(:not_found)
+  #   end
+  # end
 
   # describe '#authorize_request' do
   #   let(:user) { create(:user) }
