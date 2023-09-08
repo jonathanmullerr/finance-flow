@@ -17,7 +17,7 @@ module Authentication
     private
 
     def generate_auth_token
-      Authentication::JsonWebTokenService.encode(user_id: @user.id)
+      Authentication::JWTService.encode(user_id: @user.id)
     end
 
     def token_expiration_time

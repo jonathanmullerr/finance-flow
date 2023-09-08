@@ -4,7 +4,7 @@ RSpec.describe CategoriesController, type: :controller do
   # before { allow(controller).to receive(:authorize_request).and_return(true) }
 
   let(:user) { create(:user) }
-  let(:token) { Authentication::JsonWebTokenService.encode(user_id: user.id) }
+  let(:token) { Authentication::JWTService.encode(user_id: user.id) }
 
   before(:each) do
     request.headers['Authorization'] = "Bearer #{token}"

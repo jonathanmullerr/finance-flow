@@ -14,7 +14,7 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   let(:user) { create(:user) }
-  let(:token) { Authentication::JsonWebTokenService.encode(user_id: user.id) }
+  let(:token) { Authentication::JWTService.encode(user_id: user.id) }
 
   before(:each) do
     request.headers['Authorization'] = "Bearer #{token}"
