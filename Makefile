@@ -1,4 +1,4 @@
-CONTAINER_NAME = sportify
+CONTAINER_NAME = finance-flow
 
 .PHONY: shell run stop clean
 

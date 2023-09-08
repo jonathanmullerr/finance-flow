@@ -39,8 +39,7 @@ class CategoriesController < ApplicationController
 
   # DELETE /categories/1
   def destroy
-    @category.destroy
-    render json: { message: "Category deleted successfully" }
+    render json: { message: "Category deleted successfully" } if @category.destroy
   end
 
   private

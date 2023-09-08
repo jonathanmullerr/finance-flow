@@ -12,4 +12,11 @@ class User < ApplicationRecord
   validates :password,
             length: { minimum: 6 },
             if: -> { new_record? || !password.nil? }
+
+  # Scopes
+  scope :for_email, ->(email) { where(email: email) }
+
+  def generate_token(password)
+    Authentication::TokenService.new(self).generate_token(password)
+  end
 end
