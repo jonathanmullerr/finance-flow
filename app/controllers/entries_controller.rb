@@ -35,9 +35,7 @@ class EntriesController < ApplicationController
 
   # DELETE /entries/1
   def destroy
-    @entry.destroy
-
-    render json: { message: "Entry deleted successfully" }
+    render json: { message: "Entry deleted successfully" } if @entry.destroy
   end
 
   private

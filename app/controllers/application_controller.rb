@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::API
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  rescue_from JWT::DecodeError, with: :jwt_decode_error
+
   def not_found
     render json: { error: 'not_found' }, status: :not_found
   end
@@ -6,13 +9,17 @@ class ApplicationController < ActionController::API
   def authorize_request
     header = request.headers['Authorization']
     header = header.split(' ').last if header
-    begin
-      @decoded = JsonWebToken.decode(header)
-      @current_user = User.find(@decoded[:user_id])
-    rescue ActiveRecord::RecordNotFound => e
-      render json: { errors: e.message }, status: :unauthorized
-    rescue JWT::DecodeError => e
-      render json: { errors: e.message }, status: :unauthorized
-    end
+    @decoded = Authentication::JsonWebTokenService.decode(header)
+    @current_user = User.find(@decoded[:user_id])
+  end
+
+  private
+
+  def record_not_found(e)
+    render json: { errors: e.message }, status: :unauthorized
+  end
+
+  def jwt_decode_error(e)
+    render json: { errors: e.message }, status: :unauthorized
   end
 end
