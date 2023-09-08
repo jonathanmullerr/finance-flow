@@ -177,7 +177,7 @@ Style/Documentation:
     - "app/models/*"
     - "app/controllers/*"
     - "app/lib/*"
-    - "app/services/*"
+    - "app/services/*/*"
     - "config/application.rb"
     - "db/migrate/*"
 

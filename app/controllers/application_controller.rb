@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
-  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
-  rescue_from JWT::DecodeError, with: :jwt_decode_error
+  rescue_from ActiveRecord::RecordNotFound, with: :jwt_unauthorized
+  rescue_from JWT::DecodeError, with: :jwt_unauthorized
 
   def not_found
     render json: { error: 'not_found' }, status: :not_found
@@ -15,11 +15,7 @@ class ApplicationController < ActionController::API
 
   private
 
-  def record_not_found(e)
-    render json: { errors: e.message }, status: :unauthorized
-  end
-
-  def jwt_decode_error(e)
-    render json: { errors: e.message }, status: :unauthorized
+  def jwt_unauthorized(error)
+    render json: { errors: error.message }, status: :unauthorized
   end
 end
